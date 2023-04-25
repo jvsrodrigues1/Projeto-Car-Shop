@@ -1,6 +1,6 @@
 import CarODM from '../Models/CarModel';
 import Car from '../Domains/CarD';
-import ICar from '../Interfaces/ICars';
+import ICar from '../Interfaces/ICar';
 import NotFound from '../errors/NotFound';
 import InvalidId from '../errors/IdInvalid';
 
