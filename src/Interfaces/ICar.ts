@@ -1,4 +1,4 @@
-import IAllVehicles from './IAllVehicles';
+import IAllVehicles from './IVehicle';
 
 export default interface ICar extends IAllVehicles {
   doorsQty: number,

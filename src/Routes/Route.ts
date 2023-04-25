@@ -1,12 +1,10 @@
 import { Router } from 'express';
 import CarController from '../Controllers/CarControllers';
 
-const CARS_ID = '/cars/:id';
-
 const routes = Router();
 
 routes.put(
-  CARS_ID,
+  '/cars/:id',
   (req, res, next) => new CarController(req, res, next).updateById(),
 );
 
@@ -21,12 +19,12 @@ routes.get(
 );
 
 routes.get(
-  CARS_ID,
+  '/cars/:id',
   (req, res, next) => new CarController(req, res, next).getById(),
 );
 
 routes.delete(
-  CARS_ID,
+  '/cars/:id',
   (req, res, next) => new CarController(req, res, next).deleteById(),
 );
 
