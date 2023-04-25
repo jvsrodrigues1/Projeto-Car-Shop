@@ -1,11 +1,11 @@
-import ICars from '../Interfaces/ICar';
-import Vehicles from './VehicleD';
+import ICar from '../Interfaces/ICar';
+import Vehicle from './VehicleDomain';
 
-export default class Car extends Vehicles {
+export default class Car extends Vehicle {
   private doorsQty: number;
   private seatsQty: number;
 
-  constructor(car: ICars) {
+  constructor(car: ICar) {
     super({
       id: car.id,
       model: car.model,

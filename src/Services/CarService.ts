@@ -1,11 +1,11 @@
-import CarODM from '../Models/CarModel';
-import Car from '../Domains/CarD';
+import Car from '../Domains/CarDomain';
 import ICar from '../Interfaces/ICar';
-import NotFound from '../errors/NotFound';
-import InvalidId from '../errors/IdInvalid';
+import CarODM from '../Models/CarODM';
+import NotFoundError from '../errors/NotFoundError';
+import InvalidIdError from '../errors/InvalidIdError';
 
-const MONGO_INVALID_ID = 'Invalid mongo id';
-const CAR_404 = 'Car not found';
+const INVALID_MONGO_ID = 'Invalid mongo id';
+const CAR_NOT_FOUND = 'Car not found';
 
 export default class CarService {
   private carODM: CarODM;
@@ -28,45 +28,45 @@ export default class CarService {
 
   public async getAll(): Promise<(Car | null)[]> {
     const cars = await this.carODM.findAll();
-    const AllCarsFinal = await Promise.all(cars?.map((car) => this.createCarDomain(car)) ?? []);
-    return AllCarsFinal;
+    const carsFinal = await Promise.all(cars?.map((car) => this.createCarDomain(car)) ?? []);
+    return carsFinal;
   }
   
   public async getById(id: string): Promise<Car | null> {
     const regexId = /^[0-9a-fA-F]{24}$/;
     if (!regexId.test(id)) {
-      throw new InvalidId(MONGO_INVALID_ID);
+      throw new InvalidIdError(INVALID_MONGO_ID);
     }
     const car = await this.carODM.findById(id);
-    const OneCarFinal = this.createCarDomain(car);
-    if (!OneCarFinal) {
-      throw new NotFound(CAR_404);
+    const carFinal = this.createCarDomain(car);
+    if (!carFinal) {
+      throw new NotFoundError(CAR_NOT_FOUND);
     }
-    return OneCarFinal;
+    return carFinal;
   }
 
   public async updateById(id: string, car: ICar): Promise<Car | null> {
     const regexId = /^[0-9a-fA-F]{24}$/;
     if (!regexId.test(id)) {
-      throw new InvalidId(MONGO_INVALID_ID);
+      throw new InvalidIdError(INVALID_MONGO_ID);
     }
     const updatedCar = await this.carODM.updateById(id, car);
-    const OneCarFinal = this.createCarDomain(updatedCar);
-    if (!OneCarFinal) {
-      throw new NotFound(CAR_404);
+    const carFinal = this.createCarDomain(updatedCar);
+    if (!carFinal) {
+      throw new NotFoundError(CAR_NOT_FOUND);
     }
-    return OneCarFinal;
+    return carFinal;
   }
 
   public async deleteById(id: string): Promise<void> {
     const regexId = /^[0-9a-fA-F]{24}$/;
     if (!regexId.test(id)) {
-      throw new InvalidId(MONGO_INVALID_ID);
+      throw new InvalidIdError(INVALID_MONGO_ID);
     }
     const deletedCar = await this.carODM.deleteById(id);
-    const OneCarFinal = this.createCarDomain(deletedCar);
-    if (!OneCarFinal) {
-      throw new NotFound(CAR_404);
+    const carFinal = this.createCarDomain(deletedCar);
+    if (!carFinal) {
+      throw new NotFoundError(CAR_NOT_FOUND);
     }
   }
 }
