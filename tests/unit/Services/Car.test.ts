@@ -6,7 +6,7 @@ import CarODM from '../../../src/Models/CarModel';
 import ICar from '../../../src/Interfaces/ICar';
 import Car from '../../../src/Domains/Car';
 
-describe('Testes na camad Service', function () {
+describe('Testes na camada Service', function () {
   it('Verifica se um carro e criado com sucesso', async function () {
     const carInput: ICar = {
       model: 'HB20',
