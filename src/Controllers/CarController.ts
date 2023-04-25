@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import ICar from '../Interfaces/ICar';
 import CarService from '../Services/CarService';
-import CarODM from '../Models/CarODM';
+import CarODM from '../Models/CarModel';
 
 export default class CarController {
   private req: Request;

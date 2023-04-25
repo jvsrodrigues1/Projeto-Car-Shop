@@ -1,4 +1,4 @@
-export default class InvalidIdError extends Error {
+export default class IdInvalid extends Error {
   constructor(message: string) {
     super(message);
     this.message = message;
