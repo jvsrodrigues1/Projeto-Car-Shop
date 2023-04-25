@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import ICar from '../Interfaces/ICar';
-import CarService from '../Services/CarService';
+import CarService from '../Services/CarServices';
 import CarODM from '../Models/CarModel';
+import ICar from '../Interfaces/ICar';
 
 export default class CarController {
   private req: Request;
@@ -35,7 +35,44 @@ export default class CarController {
     }
   }
 
+  public async getById() {
+    try {
+      const { id } = this.req.params;
+      const car = await this.service.getById(id);
+      return this.res.status(200).json(car);
+    } catch (error) {
+      this.next(error);
+    }
+  }
+
+  public async updateById() {
+    try {
+      const { id } = this.req.params;
+      const car = this.req.body;
+      const updatedCar = await this.service.updateById(id, car);
+      return this.res.status(200).json(updatedCar);
+    } catch (error) {
+      this.next(error);
+    }
+  }
+
+  public async deleteById() {
+    try {
+      const { id } = this.req.params;
+      await this.service.deleteById(id);
+      return this.res.status(204).end();
+    } catch (error) {
+      this.next(error);
+    }
+  }
+
   public async getAll(): Promise<Response> {
+    const cars = await this.service.getAll();
+    return this.res.status(200).json(cars);
+  }
+}
+
+/*   public async getAll(): Promise<Response> {
     const cars = await this.service.getAll();
     return this.res.status(200).json(cars);
   }
@@ -70,4 +107,4 @@ export default class CarController {
       this.next(error);
     }
   }
-}
+} */

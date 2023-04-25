@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-export default class ErrorHandler {
+export default class ErrorH {
   public static handle(
     err: Error,
     _req: Request,

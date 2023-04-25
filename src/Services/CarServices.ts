@@ -1,8 +1,8 @@
 import Car from '../Domains/Car';
-import ICar from '../Interfaces/ICar';
-import CarODM from '../Models/CarModel';
 import NotFound from '../errors/NotFound';
 import IdInvalid from '../errors/IdInvalid';
+import ICar from '../Interfaces/ICar';
+import CarODM from '../Models/CarModel';
 
 const CAR_404 = 'Car not found';
 const INVALID_MONGO_ID = 'Invalid mongo id';
