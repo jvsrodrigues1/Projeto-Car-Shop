@@ -2,6 +2,7 @@ import { Router } from 'express';
 import MotorcycleController from '../Controllers/MotorController';
 
 const motoRoute: Router = Router();
+const LINT_CHATO = '/motorcycles/:id';
 
 motoRoute.post(
   '/motorcycles',
@@ -14,13 +15,12 @@ motoRoute.get(
 );
   
 motoRoute.get(
-  // eslint-disable-next-line sonarjs/no-duplicate-string
-  '/motorcycles/:id',
+  LINT_CHATO,
   (req, res, next) => new MotorcycleController(req, res, next).getById(),
 );
 
 motoRoute.put(
-  '/motorcycles/:id',
+  LINT_CHATO,
   (req, res, next) => new MotorcycleController(req, res, next).updateById(),
 );
 
