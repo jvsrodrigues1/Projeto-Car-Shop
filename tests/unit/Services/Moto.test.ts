@@ -9,23 +9,23 @@ import MotorcycleODM from '../../../src/Models/MotoModel';
 describe('Testes de  na camada MotorcycleService', function () {
   it('Verifica a criacao de uma moto com sucesso', async function () {
     const motorcycleInput: IMotorcycle = {
-      model: 'Honda Cb 600f',
-      year: 2002,
+      model: 'BIS',
+      year: 2020,
       color: 'Black',
       status: true,
-      buyValue: 15.990,
+      buyValue: 5000,
       category: 'Street',
-      engineCapacity: 1000,
+      engineCapacity: 100,
     };
     const motorcycleOutput: Motorcycle = new Motorcycle({
-      id: '6348513f34c397abcad040b2',
-      model: 'Honda Cb 600f',
-      year: 2002,
+      id: '63319d80feb9f483ee823ac5',
+      model: 'BIS',
+      year: 2020,
       color: 'Black',
       status: true,
-      buyValue: 15.990,
+      buyValue: 5000,
       category: 'Street',
-      engineCapacity: 1000,
+      engineCapacity: 100,
     });
     Sinon.stub(Model, 'create').resolves(motorcycleOutput);
 
@@ -37,13 +37,13 @@ describe('Testes de  na camada MotorcycleService', function () {
 
   it('Verifica erro na criacao de uma nova moto', async function () {
     const motorcycleInput: IMotorcycle = {
-      model: 'Honda',
-      year: 2002,
+      model: 'BIS',
+      year: 2020,
       color: 'Black',
       status: true,
-      buyValue: 15.990,
+      buyValue: 5000,
       category: 'Street',
-      engineCapacity: 1000,
+      engineCapacity: 100,
     };
 
     Sinon.stub(Model, 'create').resolves(null);
@@ -87,14 +87,14 @@ describe('Testes de  na camada MotorcycleService', function () {
 
   it('Verifica busca de uma moto com ID Válido', async function () {
     const motorcycleOutput: Motorcycle = new Motorcycle({
-      id: '6348513f34c397abcad040b2',
-      model: 'Honda Cb 600f Hornet',
-      year: 2002,
+      id: '63319d80feb9f483ee823ac5',
+      model: 'BIS',
+      year: 2020,
       color: 'Black',
       status: true,
-      buyValue: 15.990,
+      buyValue: 5000,
       category: 'Street',
-      engineCapacity: 1000,
+      engineCapacity: 100,
     });
     Sinon.stub(Model, 'findById').resolves(motorcycleOutput);
   
@@ -111,6 +111,45 @@ describe('Testes de  na camada MotorcycleService', function () {
     } catch (error) {
       expect((error as Error).message).to.be.equal('Invalid mongo id');
     }
+  });
+
+  it('Verifica busca de uma moto com ID nulo', async function () {
+    Sinon.stub(Model, 'findOne').resolves(null);
+
+    try {
+      const service = new MotorcycleService(new MotorcycleODM());
+      await service.getById('634852326b35b59438fbea3f');
+    } catch (error) {
+      expect((error as Error).message).to.be.equal('Motorcycle not found');
+    }
+  });
+
+  it('Verifica atualizacao de uma moto com id válido', async function () {
+    const motorcycleInput: IMotorcycle = {
+      model: 'Honda Biz',
+      year: 2002,
+      color: 'Black',
+      status: true,
+      buyValue: 15.990,
+      category: 'Street',
+      engineCapacity: 1000,
+    };
+    const motorcycleOutput: Motorcycle = new Motorcycle({
+      id: '6348513f34c397abcad040b2',
+      model: 'Honda Cb 600f Hornet',
+      year: 2002,
+      color: 'Black',
+      status: true,
+      buyValue: 15.990,
+      category: 'Street',
+      engineCapacity: 1000,
+    });
+    Sinon.stub(Model, 'findByIdAndUpdate').resolves(motorcycleOutput);
+  
+    const service = new MotorcycleService(new MotorcycleODM());
+    const result = await service.updateById('6348513f34c397abcad040b2', motorcycleInput);
+  
+    expect(result).to.be.deep.equal(motorcycleOutput);
   });
 
   afterEach(function () {
